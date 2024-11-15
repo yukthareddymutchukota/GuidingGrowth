@@ -36,8 +36,8 @@ void Consequinces(){
   if(this.productivity == 9){this.colour = color(100,50,170);}
   if(this.productivity == 10){this.colour = color(255,0,255);}
   //////////////
-  this.satisfaction = (moniterTime + deadlineStrictness)/2;
- // this.productivity = manager.willingnessToCooperate;
+  this.satisfaction =  manager.willingnessToCooperate - ((manager.moniterTime + manager.deadlineStrictness)/2)/2;
+  this.productivity = 1 (manager.moniterTime + manager.deadlineStrictness)/2 ;
   
 }
 }
