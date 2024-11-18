@@ -104,7 +104,7 @@ void drawCompanyStatsPanel() {
     // DRAW PANEL BACKGROUND
     fill(#052c50);
     noStroke();
-    rect(0, 0, 250, height);
+    rect(0, 0, 215, height);
 
     // SET TEXT COLOR AND SIZE
     fill(255);
