@@ -14,25 +14,51 @@
  * =========================================================
  */
 
-synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:GuidingGrowth:415671:
+synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:window1:964298:
   appc.background(230);
-} //_CODE_:GuidingGrowth:415671:
+} //_CODE_:window1:964298:
 
-public void EmployeeMonitoringTimeMethod(GCustomSlider source, GEvent event) { //_CODE_:employeeMonitoringTimeVar:570007:
-  monitoringTime = employeeMonitoringTimeVar.getValueI();
-} //_CODE_:employeeMonitoringTimeVar:570007:
+public void businessNameChanged(GTextField source, GEvent event) { //_CODE_:businessNameVar:886770:
+  businessName = businessNameVar.getText();
+} //_CODE_:businessNameVar:886770:
 
-public void collaborationWillingnessMethod(GCustomSlider source, GEvent event) { //_CODE_:collaborationWillingessVar:309765:
-  collaborationWillingness = collaborationWillingessVar.getValueI();
-} //_CODE_:collaborationWillingessVar:309765:
+public void pauseButtonClicked(GButton source, GEvent event) { //_CODE_:pauseButtonVar:515231:
+if (event == GEvent.CLICKED) {
+        manager.pauseSimulation();
+        pauseButtonVar.setVisible(false);
+        resumeButtonVar.setVisible(true);
+    }
+  } //_CODE_:pauseButtonVar:515231:
 
-public void deadlineStrictnessChanged(GCustomSlider source, GEvent event) { //_CODE_:deadlineStrictnessVar:769606:
-  deadlineStrictness = deadlineStrictnessVar.getValueI();
-} //_CODE_:deadlineStrictnessVar:769606:
+public void resumeButtonClicked(GButton source, GEvent event) { //_CODE_:resumeButtonVar:222188:
+if (event == GEvent.CLICKED) {
+        manager.resumeSimulation();
+        resumeButtonVar.setVisible(false);
+        pauseButtonVar.setVisible(true);
+    }
+} //_CODE_:resumeButtonVar:222188:
 
-public void employeeSalaryChanged(GCustomSlider source, GEvent event) { //_CODE_:employeeSalaryVar:801857:
-  employeeSalary = employeeSalaryVar.getValueI();
-} //_CODE_:employeeSalaryVar:801857:
+public void resetButtonClicked(GButton source, GEvent event) { //_CODE_:resetButtonVar:536646:
+if (event == GEvent.CLICKED) {
+        manager.resetSimulation();
+    }
+  } //_CODE_:resetButtonVar:536646:
+
+public void monitoringTimeChanged(GSlider source, GEvent event) { //_CODE_:monitoringTimeVar:206279:
+    monitoringTime = source.getValueI();
+} //_CODE_:monitoringTimeVar:206279:
+
+public void collabWillingnessChanged(GSlider source, GEvent event) { //_CODE_:collaborationWillingnessVar:501130:
+    collaborationWillingness = source.getValueI();
+} //_CODE_:collaborationWillingnessVar:501130:
+
+public void deadlineStrictnessChanged(GSlider source, GEvent event) { //_CODE_:deadlineStrictnessVar:582890:
+    deadlineStrictness = source.getValueI();
+} //_CODE_:deadlineStrictnessVar:582890:
+
+public void employeeSalaryChanged(GSlider source, GEvent event) { //_CODE_:employeeSalaryVar:713800:
+    employeeSalary = source.getValueI();
+} //_CODE_:employeeSalaryVar:713800:
 
 
 
@@ -42,57 +68,85 @@ public void createGUI(){
   G4P.messagesEnabled(false);
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
-  surface.setTitle("Sketch Window");
-  GuidingGrowth = GWindow.getWindow(this, "Guiding Growth", 0, 0, 250, 400, JAVA2D);
-  GuidingGrowth.noLoop();
-  GuidingGrowth.setActionOnClose(G4P.KEEP_OPEN);
-  GuidingGrowth.addDrawHandler(this, "win_draw1");
-  EmployeeMonitoringTimeVar = new GLabel(GuidingGrowth, 10, 16, 170, 20);
-  EmployeeMonitoringTimeVar.setText("Employee Monitoring Time");
-  EmployeeMonitoringTimeVar.setOpaque(false);
-  employeeMonitoringTimeVar = new GCustomSlider(GuidingGrowth, 11, 37, 230, 40, "grey_blue");
-  employeeMonitoringTimeVar.setLimits(10, 10, 30);
-  employeeMonitoringTimeVar.setNbrTicks(10);
-  employeeMonitoringTimeVar.setNumberFormat(G4P.INTEGER, 0);
-  employeeMonitoringTimeVar.setOpaque(false);
-  employeeMonitoringTimeVar.addEventHandler(this, "EmployeeMonitoringTimeMethod");
-  collaborationWillingnessVar = new GLabel(GuidingGrowth, 9, 99, 177, 20);
-  collaborationWillingnessVar.setText("Collaboration Willingess");
+  surface.setTitle("Guiding Growth");
+  window1 = GWindow.getWindow(this, "GUI", 0, 0, 240, 600, JAVA2D);
+  window1.noLoop();
+  window1.setActionOnClose(G4P.KEEP_OPEN);
+  window1.addDrawHandler(this, "win_draw1");
+  businessNameVar = new GTextField(window1, 10, 34, 218, 19, G4P.SCROLLBARS_NONE);
+  businessNameVar.setText("Guiding Growth");
+  businessNameVar.setPromptText("Guiding Growth");
+  businessNameVar.setOpaque(true);
+  businessNameVar.addEventHandler(this, "businessNameChanged");
+  businessNameLabel = new GLabel(window1, 9, 10, 219, 20);
+  businessNameLabel.setText("Enter Business Name:");
+  businessNameLabel.setOpaque(false);
+  pauseButtonVar = new GButton(window1, 9, 84, 103, 30);
+  pauseButtonVar.setText("Pause");
+  pauseButtonVar.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
+  pauseButtonVar.addEventHandler(this, "pauseButtonClicked");
+  resumeButtonVar = new GButton(window1, 125, 83, 103, 30);
+  resumeButtonVar.setText("Resume");
+  resumeButtonVar.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  resumeButtonVar.addEventHandler(this, "resumeButtonClicked");
+  resetButtonVar = new GButton(window1, 10, 560, 218, 30);
+  resetButtonVar.setText("Reset");
+  resetButtonVar.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+  resetButtonVar.addEventHandler(this, "resetButtonClicked");
+  monitoringTimePrompt = new GLabel(window1, 11, 147, 216, 20);
+  monitoringTimePrompt.setText("Monitoring Time:");
+  monitoringTimePrompt.setOpaque(false);
+  monitoringTimeVar = new GSlider(window1, 12, 168, 215, 40, 10.0);
+  monitoringTimeVar.setShowLimits(true);
+  monitoringTimeVar.setLimits(1, 1, 10);
+  monitoringTimeVar.setNbrTicks(10);
+  monitoringTimeVar.setNumberFormat(G4P.INTEGER, 0);
+  monitoringTimeVar.setOpaque(false);
+  monitoringTimeVar.addEventHandler(this, "monitoringTimeChanged");
+  collaborationWillingnessPrompt = new GLabel(window1, 12, 246, 212, 20);
+  collaborationWillingnessPrompt.setText("Collaboration Willingness:");
+  collaborationWillingnessPrompt.setOpaque(false);
+  collaborationWillingnessVar = new GSlider(window1, 11, 267, 212, 40, 10.0);
+  collaborationWillingnessVar.setShowLimits(true);
+  collaborationWillingnessVar.setLimits(1, 1, 10);
+  collaborationWillingnessVar.setNumberFormat(G4P.INTEGER, 0);
   collaborationWillingnessVar.setOpaque(false);
-  collaborationWillingessVar = new GCustomSlider(GuidingGrowth, 9, 119, 230, 40, "grey_blue");
-  collaborationWillingessVar.setLimits(5, 0, 10);
-  collaborationWillingessVar.setNbrTicks(10);
-  collaborationWillingessVar.setNumberFormat(G4P.INTEGER, 0);
-  collaborationWillingessVar.setOpaque(false);
-  collaborationWillingessVar.addEventHandler(this, "collaborationWillingnessMethod");
-  deadlineStrictnessText = new GLabel(GuidingGrowth, 8, 188, 181, 20);
-  deadlineStrictnessText.setText("Deadline Strictness");
-  deadlineStrictnessText.setOpaque(false);
-  deadlineStrictnessVar = new GCustomSlider(GuidingGrowth, 10, 208, 230, 40, "grey_blue");
-  deadlineStrictnessVar.setLimits(5, 0, 10);
-  deadlineStrictnessVar.setNbrTicks(10);
+  collaborationWillingnessVar.addEventHandler(this, "collabWillingnessChanged");
+  deadlineStrictnessPrompt = new GLabel(window1, 12, 353, 211, 20);
+  deadlineStrictnessPrompt.setText("Deadline Strictness:");
+  deadlineStrictnessPrompt.setOpaque(false);
+  deadlineStrictnessVar = new GSlider(window1, 11, 373, 212, 40, 10.0);
+  deadlineStrictnessVar.setShowLimits(true);
+  deadlineStrictnessVar.setLimits(1, 1, 10);
   deadlineStrictnessVar.setNumberFormat(G4P.INTEGER, 0);
   deadlineStrictnessVar.setOpaque(false);
   deadlineStrictnessVar.addEventHandler(this, "deadlineStrictnessChanged");
-  employeeSalaryText = new GLabel(GuidingGrowth, 9, 279, 225, 20);
-  employeeSalaryText.setText("Employee Salary:");
-  employeeSalaryText.setOpaque(false);
-  employeeSalaryVar = new GCustomSlider(GuidingGrowth, 9, 301, 225, 40, "grey_blue");
-  employeeSalaryVar.setLimits(50000, 45000, 150000);
+  employeeSalaryPrompt = new GLabel(window1, 13, 459, 209, 20);
+  employeeSalaryPrompt.setText("Employee Salary:");
+  employeeSalaryPrompt.setOpaque(false);
+  employeeSalaryVar = new GSlider(window1, 13, 479, 209, 40, 10.0);
+  employeeSalaryVar.setShowValue(true);
+  employeeSalaryVar.setLimits(50000, 30000, 90000);
+  employeeSalaryVar.setNbrTicks(10);
   employeeSalaryVar.setNumberFormat(G4P.INTEGER, 0);
   employeeSalaryVar.setOpaque(false);
   employeeSalaryVar.addEventHandler(this, "employeeSalaryChanged");
-  GuidingGrowth.loop();
+  window1.loop();
 }
 
 // Variable declarations 
 // autogenerated do not edit
-GWindow GuidingGrowth;
-GLabel EmployeeMonitoringTimeVar; 
-GCustomSlider employeeMonitoringTimeVar; 
-GLabel collaborationWillingnessVar; 
-GCustomSlider collaborationWillingessVar; 
-GLabel deadlineStrictnessText; 
-GCustomSlider deadlineStrictnessVar; 
-GLabel employeeSalaryText; 
-GCustomSlider employeeSalaryVar; 
+GWindow window1;
+GTextField businessNameVar; 
+GLabel businessNameLabel; 
+GButton pauseButtonVar; 
+GButton resumeButtonVar; 
+GButton resetButtonVar; 
+GLabel monitoringTimePrompt; 
+GSlider monitoringTimeVar; 
+GLabel collaborationWillingnessPrompt; 
+GSlider collaborationWillingnessVar; 
+GLabel deadlineStrictnessPrompt; 
+GSlider deadlineStrictnessVar; 
+GLabel employeeSalaryPrompt; 
+GSlider employeeSalaryVar; 
